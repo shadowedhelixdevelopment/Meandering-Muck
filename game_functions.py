@@ -9,18 +9,25 @@ def check_events(slime):
         if event.type == pygame.QUIT:
             sys.exit()
 
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RIGHT:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RIGHT or event.key == ord('d'):
                 slime.moving_right = True
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
+            if event.key == pygame.K_LEFT or event.key == ord('a'):
                 slime.moving_left = True
+            if event.key == pygame.K_UP or event.key == ord('w'):
+                slime.moving_up = True
+            if event.key == pygame.K_DOWN or event.key == ord('s'):
+                slime.moving_down = True
 
-        elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_RIGHT:
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_RIGHT or event.key == ord('d'):
                 slime.moving_right = False
-            elif event.key == pygame.K_RIGHT:
-                slime.moving_right = False
+            if event.key == pygame.K_LEFT or event.key == ord('a'):
+                slime.moving_left = False
+            if event.key == pygame.K_UP or event.key == ord('w'):
+                slime.moving_up = False
+            if event.key == pygame.K_DOWN or event.key == ord('s'):
+                slime.moving_down = False
 
 
 def update_screen(ai_settings, screen, slime):
