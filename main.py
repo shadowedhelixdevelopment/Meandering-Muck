@@ -2,6 +2,7 @@ import sys
 import pygame
 from settings import Settings
 from slime import Slime
+import game_functions as gf
 
 
 def run_game():
@@ -16,18 +17,12 @@ def run_game():
 
     # Start main loop for the game.
     while True:
+        gf.check_events(slime)
+        slime.update()
+        gf.update_screen(ai_settings, screen, slime)
 
-        # Watch for keyboard and mouse events.
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
-
-    # Redraw the screen during each pass through the loop.
-    screen.fill(ai_settings.bg_color)
-    slime.blitme()
-
-    # Make the most recently drawn screen visible.
-    pygame.display.flip()
+        # Make the most recently drawn screen visible.
+        pygame.display.flip()
 
 
 run_game()
