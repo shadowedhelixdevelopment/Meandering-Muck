@@ -3,7 +3,7 @@ import pygame
 
 class Slime():
 
-    def __init__(self, ai_settings, screen):
+    def __init__(self, ai_settings, screen, x, y):
         """Initialize the slime and set it's starting position."""
         self.screen = screen
         self.ai_settings = ai_settings
@@ -13,9 +13,20 @@ class Slime():
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
 
-        # Start each new ship at the bottom center of the screen(Will change later).
-        self.rect.centerx = self.screen_rect.centerx
-        self.rect.bottom = self.screen_rect.bottom
+        # Start each new ship at the entrance to the maze.
+        print(x, y)
+        if x == 0:
+            self.rect.left = 0
+        elif x == ai_settings.maze_width - 1:
+            self.rect.right = ai_settings.screen_width
+        else:
+            self.rect.centerx = x * ai_settings.maze_block_width + (ai_settings.maze_block_width / 2)
+        if y == 0:
+            self.rect.top = 0
+        elif y == ai_settings.maze_height - 1:
+            self.rect.bottom = ai_settings.screen_height
+        else:
+            self.rect.centery = y * ai_settings.maze_block_height + (ai_settings.maze_block_height / 2)
 
         # Store a decimal value for the ship's center.
         self.centerx = float(self.rect.centerx)

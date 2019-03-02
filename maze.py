@@ -6,16 +6,16 @@ from settings import Settings
 
 def make_maze():
     s = Settings()
-    shape = ((s.maze_height * 2) + 1, (s.maze_width * 2) + 1)
+    shape = s.maze_height, s.maze_width
     # Build Maze
     maze = numpy.zeros(shape, dtype=int)
     # Fill borders
     maze[0, :] = maze[-1, :] = 1
     maze[:, 0] = maze[:, -1] = 1
     minx = 0
-    maxx = (s.maze_width * 2)
+    maxx = s.maze_width - 1
     miny = 0
-    maxy = (s.maze_height * 2)
+    maxy = s.maze_height - 1
     maze = maze_section(maze, minx, maxx, miny, maxy, 1)
     return maze
 
@@ -147,6 +147,10 @@ def door(maze, axis, wallpoint, mind, maxd):
     else:
         maze[wallpoint, doorpoint] = 0
     return maze
+
+
+#def drawmaze(maze):
+
 
 
 # pyplot.figure(figsize=(10, 5))

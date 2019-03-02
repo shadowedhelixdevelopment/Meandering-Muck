@@ -12,3 +12,5 @@ class Settings:
         # Maze Settings
         self.maze_width = 25
         self.maze_height = 25
+        self.maze_block_width = self.screen_width / self.maze_width
+        self.maze_block_height = self.screen_height / self.maze_height
