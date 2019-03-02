@@ -47,7 +47,7 @@ class Slime():
             self.centerx -= self.ai_settings.slime_speed_factor
         if self.moving_top and self.rect.top > self.screen_rect.top:
             self.centery -= self.ai_settings.slime_speed_factor
-        if self.moving_down and self.rect.bottom > 0:
+        if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
             self.centery += self.ai_settings.slime_speed_factor
 
         # Update rect object from self.center.
