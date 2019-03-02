@@ -16,7 +16,6 @@ class Slime():
         self.screen_rect = screen.get_rect()
 
         # Start each new ship at the entrance to the maze.
-        print(x, y)
         if x == 0:
             self.rect.left = 0
         elif x == ai_settings.maze_width - 1:
@@ -48,7 +47,6 @@ class Slime():
         collideleft = 0
         # Update the slime's center value, not the rect.
         for i in range(0, len(self.walls)):
-            #pygame.draw.rect(self.screen, (0, 0, 0), self.walls[i].rect)
             if self.rect.colliderect(self.walls[i].rect):
                 if self.rect.centery < self.walls[i].rect.centery:
                     collidebottom = 1
@@ -58,13 +56,13 @@ class Slime():
                     collideright = 1
                 elif self.rect.centerx < self.walls[i].rect.centerx:
                     collideleft = 1
-        if self.moving_right and self.rect.right < self.screen_rect.right and collideright != 1:
+        if self.moving_right and self.rect.right < self.screen_rect.right: # and collideright != 1:
             self.centerx += self.ai_settings.slime_speed_factor
-        if self.moving_left and self.rect.left > 0 and collideleft != 1:
+        if self.moving_left and self.rect.left > 0: # and collideleft != 1:
             self.centerx -= self.ai_settings.slime_speed_factor
-        if self.moving_top and self.rect.top > self.screen_rect.top and collidetop != 1:
+        if self.moving_top and self.rect.top > self.screen_rect.top: # and collidetop != 1:
             self.centery -= self.ai_settings.slime_speed_factor
-        if self.moving_down and self.rect.bottom < self.screen_rect.bottom and collidebottom != 1:
+        if self.moving_down and self.rect.bottom < self.screen_rect.bottom: # and collidebottom != 1:
             self.centery += self.ai_settings.slime_speed_factor
 
         # Update rect object from self.center.
