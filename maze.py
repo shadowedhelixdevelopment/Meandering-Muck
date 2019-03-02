@@ -1,19 +1,21 @@
 import numpy
 from numpy.random import randint as rand
-import matplotlib.pyplot as pyplot
+from settings import Settings
+# import matplotlib.pyplot as pyplot
 
 
 def make_maze():
-    shape = ((height * 2) + 1, (width * 2) + 1)
+    s = Settings()
+    shape = ((s.maze_height * 2) + 1, (s.maze_width * 2) + 1)
     # Build Maze
     maze = numpy.zeros(shape, dtype=int)
     # Fill borders
     maze[0, :] = maze[-1, :] = 1
     maze[:, 0] = maze[:, -1] = 1
     minx = 0
-    maxx = (width * 2)
+    maxx = (s.maze_width * 2)
     miny = 0
-    maxy = (height * 2)
+    maxy = (s.maze_height * 2)
     maze = maze_section(maze, minx, maxx, miny, maxy, 1)
     return maze
 
@@ -21,53 +23,49 @@ def make_maze():
 def maze_section(maze, minx, maxx, miny, maxy, iteration):
     skip = 0
     # Test to see if there is room for walls
-    invalidcols = [(miny + wall), (maxy - wall)]
-    for y in range((miny + wall), (maxy - wall)):
+    invalidcols = [(miny + 1), (maxy - 1)]
+    for y in range((miny + 1), (maxy - 1)):
         if maze[y, minx] != 1 or maze[y, maxx] != 1:
             if y not in invalidcols:
                 invalidcols.append(y)
-    invalidrows = [(minx + wall), (maxx - wall)]
-    for x in range((minx + wall), (maxx - wall)):
+    invalidrows = [(minx + 1), (maxx - 1)]
+    for x in range((minx + 1), (maxx - 1)):
         if maze[miny, x] != 1 or maze[maxy, x] != 1:
             if x not in invalidrows:
                 invalidrows.append(x)
     # check for corridors that are too small for a wall due to the 1 space on either side limit and door positioning
-    if (maxx - minx) <= len(invalidrows) + wall or (maxy - miny) <= len(invalidcols) + wall:
+    if (maxx - minx) <= len(invalidrows) + 1 or (maxy - miny) <= len(invalidcols) + 1:
         return maze
     # Push wall & corr out of min, but leave it in the max as the max is never picked
     wallx = 0
     while wallx == 0 or wallx in invalidrows:
-        wallx = rand((minx + corr + wall), maxx - wall)
+        wallx = rand((minx + 2), maxx - 1)
     wally = 0
     while wally == 0 or wally in invalidcols:
-        wally = rand((miny + corr + wall), maxy - wall)
+        wally = rand((miny + 2), maxy - 1)
     # set bits to 1 for the walls
-    maze[wally, (minx + wall):maxx] = 1
-    maze[(miny + wall):maxy, wallx] = 1
+    maze[wally, (minx + 1):maxx] = 1
+    maze[(miny + 1):maxy, wallx] = 1
     # Make 3 doors at random
     # coin flip to see if a door should be placed, otherwise flag a skip
     if rand(1, 3) == 1:
-        print("North")
         maze = door(maze, "x", wallx, miny, wally)  # N
     else:
         skip = 1
     if rand(1, 3) == 1 or skip > 0:
-        print("East")
         maze = door(maze, "y", wally, wallx, maxx)  # E
     else:
         skip = 2
     if rand(1, 3) == 1 or skip > 0:
-        print("South Door")
         maze = door(maze, "x", wallx, wally, maxy)  # S
     else:
         skip = 3
     if skip > 0:
-        print("West")
         maze = door(maze, "y", wally, minx, wallx)  # W
     # Determine where the start and end are
     if iteration == 1:
         if skip == 1:
-            if rand(1,3) == 1:
+            if rand(1, 3) == 1:
                 point = 2
             else:
                 point = 3
@@ -84,7 +82,7 @@ def maze_section(maze, minx, maxx, miny, maxy, iteration):
             else:
                 maze[miny, rand((wallx + 1), maxx)] = point
         elif skip == 2:
-            if rand(1,3) == 1:
+            if rand(1, 3) == 1:
                 point = 2
             else:
                 point = 3
@@ -101,7 +99,7 @@ def maze_section(maze, minx, maxx, miny, maxy, iteration):
             else:
                 maze[maxy, rand((wallx + 1), maxx)] = point
         elif skip == 3:
-            if rand(1,3) == 1:
+            if rand(1, 3) == 1:
                 point = 2
             else:
                 point = 3
@@ -118,7 +116,7 @@ def maze_section(maze, minx, maxx, miny, maxy, iteration):
             else:
                 maze[maxy, rand((minx + 1), wallx)] = point
         else:
-            if rand(1,3) == 1:
+            if rand(1, 3) == 1:
                 point = 2
             else:
                 point = 3
@@ -143,20 +141,15 @@ def maze_section(maze, minx, maxx, miny, maxy, iteration):
 
 
 def door(maze, axis, wallpoint, mind, maxd):
-    door = rand((mind + wall), maxd)
+    doorpoint = rand((mind + 1), maxd)
     if axis == "x":
-        maze[door, wallpoint] = 0
+        maze[doorpoint, wallpoint] = 0
     else:
-        maze[wallpoint, door] = 0
+        maze[wallpoint, doorpoint] = 0
     return maze
 
 
-width = 25
-height = 25
-corr = 1
-wall = 1
-
-pyplot.figure(figsize=(10, 5))
-pyplot.imshow(make_maze(), cmap=pyplot.cm.binary, interpolation=None)
-pyplot.xticks([]), pyplot.yticks([])
-pyplot.show()
+# pyplot.figure(figsize=(10, 5))
+# pyplot.imshow(make_maze(), cmap=pyplot.cm.binary, interpolation=None)
+# pyplot.xticks([]), pyplot.yticks([])
+# pyplot.show()

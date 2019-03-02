@@ -3,11 +3,14 @@ import pygame
 from settings import Settings
 from slime import Slime
 import game_functions as gf
+import maze as mz
+import numpy
 
 
 def run_game():
     # Initialize pygame, settings and create screen object.
     pygame.init()
+    maze = mz.make_maze()
     ai_settings = Settings()
     screen = pygame.display.set_mode((ai_settings.screen_width, ai_settings.screen_height))
     pygame.display.set_caption("Meandering Muck")
