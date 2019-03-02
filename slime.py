@@ -10,7 +10,7 @@ class Slime():
         self.walls = walls
 
         # Load the ship image and get it's rect.
-        self.image = pygame.image.load('./images/slime.jpg')
+        self.image = pygame.image.load('./images/slime.gif')
         self.image = self.image.convert_alpha()
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
