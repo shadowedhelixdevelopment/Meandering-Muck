@@ -9,7 +9,7 @@ class Slime():
         self.ai_settings = ai_settings
 
         # Load the ship image and get it's rect.
-        self.image = pygame.image.load('./images/slime3.0.jpg')
+        self.image = pygame.image.load('./images/slime.jpg')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
 
