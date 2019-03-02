@@ -13,7 +13,7 @@ def run_game():
     pygame.display.set_caption("Meandering Muck")
 
     # Make a Slime.
-    slime = Slime(screen)
+    slime = Slime(ai_settings, screen)
 
     # Start main loop for the game.
     while True:
