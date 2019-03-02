@@ -15,7 +15,7 @@ def check_events(slime):
             if event.key == pygame.K_LEFT or event.key == ord('a'):
                 slime.moving_left = True
             if event.key == pygame.K_UP or event.key == ord('w'):
-                slime.moving_up = True
+                slime.moving_top = True
             if event.key == pygame.K_DOWN or event.key == ord('s'):
                 slime.moving_down = True
 
@@ -25,7 +25,7 @@ def check_events(slime):
             if event.key == pygame.K_LEFT or event.key == ord('a'):
                 slime.moving_left = False
             if event.key == pygame.K_UP or event.key == ord('w'):
-                slime.moving_up = False
+                slime.moving_top = False
             if event.key == pygame.K_DOWN or event.key == ord('s'):
                 slime.moving_down = False
 
