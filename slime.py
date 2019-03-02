@@ -8,7 +8,7 @@ class Slime():
         self.screen = screen
 
         # Load the ship image and get it's rect.
-        self.image = pygame.image.load('./images/ship.bmp')
+        self.image = pygame.image.load('./images/slimetop2.50.jpg')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
 
@@ -22,9 +22,9 @@ class Slime():
         self.moving_up = False
         self.moving_down = False
 
-
     def update(self):
         """Update the ship's position based on the movement flags."""
+        # Update the slime's center value, not the rect.
         if self.moving_right:
             self.rect.centerx += 1
         if self.moving_left:
@@ -33,7 +33,6 @@ class Slime():
             self.rect.centery -= 1
         if self.moving_down:
             self.rect.centery += 1
-
 
     def blitme(self):
         """Draw the slime at it's current location."""
