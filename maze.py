@@ -2,6 +2,7 @@ import numpy
 from numpy.random import randint as rand
 from settings import Settings
 # import matplotlib.pyplot as pyplot
+import wall as w
 
 
 def make_maze():
@@ -149,8 +150,13 @@ def door(maze, axis, wallpoint, mind, maxd):
     return maze
 
 
-#def drawmaze(maze):
-
+def define_maze(ai_settings, maze):
+    walls = []
+    for (x, y), value in numpy.ndenumerate(maze):
+        if value == 1:
+            wall = w.Wall((x * ai_settings.maze_block_width), (y * ai_settings.maze_block_height))
+            walls.append(wall)
+    return walls
 
 
 # pyplot.figure(figsize=(10, 5))
