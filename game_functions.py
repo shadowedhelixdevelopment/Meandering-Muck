@@ -36,8 +36,11 @@ def update_screen(ai_settings, screen, slime):
     screen.blit(ai_settings.bg, (0, 0))
     for i in range(0, len(ai_settings.walls)):
         wallrect = pygame.draw.rect(screen, (0, 0, 0), ai_settings.walls[i].rect)
-        # wallrect.get_rect()
-        screen.blit(ai_settings.stone, wallrect)
+        for k, v in sorted(ai_settings.stone.items(), reverse=True):
+            screen.blit(v, wallrect)
+            if i % k == 0:
+                screen.blit(v, wallrect)
+                break
     pygame.draw.rect(screen, (255, 255, 255), ai_settings.end.rect)
     slime.blitme()
 
