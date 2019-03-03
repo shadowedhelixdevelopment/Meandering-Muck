@@ -1,3 +1,9 @@
+import pygame
+import numpy
+from numpy.random import randint as rand
+import maze as mz
+
+
 class Settings:
     """A class to store all settings for Meandering Muck"""
 
@@ -10,7 +16,35 @@ class Settings:
         # Slime Settings.
         self.slime_speed_factor = 1.5
         # Maze Settings
-        self.maze_width = 25
-        self.maze_height = 25
+        self.maze_width = 0
+        self.maze_height = 0
+        self.orig_bg = pygame.image.load("./images/stonefloor.gif")
+        self.orig_stone = pygame.image.load("./images/stonetilefloor.gif")
+        self.maze_block_width = None
+        self.maze_block_height = None
+        self.maze = None
+        self.startx = None
+        self.starty = None
+        self.bg = None
+        self.stone = None
+        self.walls = []
+        self.end = None
+        self.loadnewsettings()
+
+    def loadnewsettings(self):
+        self.maze_width += 10
+        self.maze_height += 10
         self.maze_block_width = self.screen_width / self.maze_width
         self.maze_block_height = self.screen_height / self.maze_height
+        self.bg = pygame.transform.flip(self.orig_bg, bool(rand(0, 2)), bool(rand(0, 2)))
+        self.stone = pygame.transform.scale(self.orig_stone, (int(self.maze_block_width), int(self.maze_block_height)))
+        self.generatenewmaze()
+
+    def generatenewmaze(self):
+        self.maze = mz.make_maze(self)
+        for (x, y), value in numpy.ndenumerate(self.maze):
+            if value == 2:
+                self.startx = x
+                self.starty = y
+                break
+        self.walls, self.end = mz.define_maze(self, self.maze)

@@ -1,12 +1,10 @@
 import numpy
 from numpy.random import randint as rand
-from settings import Settings
 # import matplotlib.pyplot as pyplot
 import wall as w
 
 
-def make_maze():
-    s = Settings()
+def make_maze(s):
     shape = s.maze_height, s.maze_width
     # Build Maze
     maze = numpy.zeros(shape, dtype=int)
@@ -150,16 +148,15 @@ def door(maze, axis, wallpoint, mind, maxd):
     return maze
 
 
-def define_maze(ai_settings, maze):
+def define_maze(s, maze):
     walls = []
     for (x, y), value in numpy.ndenumerate(maze):
         if value == 1:
-            wall = w.Wall((x * ai_settings.maze_block_width), (y * ai_settings.maze_block_height))
+            wall = w.Wall(s, (x * s.maze_block_width), (y * s.maze_block_height))
             walls.append(wall)
         elif value == 3:
-            end = w.Wall((x * ai_settings.maze_block_width), (y * ai_settings.maze_block_height))
+            end = w.Wall(s, (x * s.maze_block_width), (y * s.maze_block_height))
     return walls, end
-
 
 # pyplot.figure(figsize=(10, 5))
 # pyplot.imshow(make_maze(), cmap=pyplot.cm.binary, interpolation=None)

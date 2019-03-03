@@ -1,7 +1,5 @@
 import sys
 import pygame
-import numpy
-import wall as w
 
 
 def check_events(slime):
@@ -31,14 +29,16 @@ def check_events(slime):
                 slime.moving_down = False
 
 
-def update_screen(ai_settings, screen, bg, walls, slime, end):
+def update_screen(ai_settings, screen, slime):
     """Update images on the screen and flip to the new screen."""
     # Redraw the screen during each pass through the loop.
     screen.fill(ai_settings.bg_color)
-    screen.blit(bg, (0, 0))
-    for i in range(0, len(walls)):
-        pygame.draw.rect(screen, (0, 0, 0), walls[i].rect)
-    pygame.draw.rect(screen, (255, 255, 255), end.rect)
+    screen.blit(ai_settings.bg, (0, 0))
+    for i in range(0, len(ai_settings.walls)):
+        wallrect = pygame.draw.rect(screen, (0, 0, 0), ai_settings.walls[i].rect)
+        # wallrect.get_rect()
+        screen.blit(ai_settings.stone, wallrect)
+    pygame.draw.rect(screen, (255, 255, 255), ai_settings.end.rect)
     slime.blitme()
 
     # Make the most recently drawn screen visible.

@@ -4,12 +4,10 @@ import sys
 
 class Slime():
 
-    def __init__(self, ai_settings, screen, x, y, walls, end):
+    def __init__(self, ai_settings, screen):
         """Initialize the slime and set it's starting position."""
         self.screen = screen
         self.ai_settings = ai_settings
-        self.walls = walls
-        self.end = end
 
         # Load the slime image and get it's rect.
         self.image = pygame.image.load('./images/slime.gif')
@@ -18,18 +16,18 @@ class Slime():
         self.screen_rect = screen.get_rect()
 
         # Start each new slime at the entrance to the maze.
-        if x == 0:
+        if self.ai_settings.startx == 0:
             self.rect.left = 0
-        elif x == ai_settings.maze_width - 1:
+        elif self.ai_settings.startx == ai_settings.maze_width - 1:
             self.rect.right = ai_settings.screen_width
         else:
-            self.rect.centerx = x * ai_settings.maze_block_width + (ai_settings.maze_block_width / 2)
-        if y == 0:
+            self.rect.centerx = self.ai_settings.startx * ai_settings.maze_block_width + (ai_settings.maze_block_width / 2)
+        if self.ai_settings.starty == 0:
             self.rect.top = 0
-        elif y == ai_settings.maze_height - 1:
+        elif self.ai_settings.starty == ai_settings.maze_height - 1:
             self.rect.bottom = ai_settings.screen_height
         else:
-            self.rect.centery = y * ai_settings.maze_block_height + (ai_settings.maze_block_height / 2)
+            self.rect.centery = self.ai_settings.starty * ai_settings.maze_block_height + (ai_settings.maze_block_height / 2)
 
         # Store a decimal value for the slime's center.
         self.centerx = float(self.rect.centerx)
@@ -49,22 +47,22 @@ class Slime():
         collideright = 0
         collideleft = 0
         # Check for End Game
-        if self.rect.colliderect(self.end):
+        if self.rect.colliderect(self.ai_settings.end):
             sys.exit()
         # Update the slime's center value, not the rect.
-        for i in range(0, len(self.walls)):
-            if self.rect.colliderect(self.walls[i].rect):
-                if self.rect.bottom > self.walls[i].rect.top:
-                    if self.rect.bottom - self.walls[i].rect.top <= 2:
+        for i in range(0, len(self.ai_settings.walls)):
+            if self.rect.colliderect(self.ai_settings.walls[i].rect):
+                if self.rect.bottom > self.ai_settings.walls[i].rect.top:
+                    if self.rect.bottom - self.ai_settings.walls[i].rect.top <= 2:
                         collidebottom = 1
-                if self.rect.top < self.walls[i].rect.bottom:
-                    if self.walls[i].rect.bottom - self.rect.top <= 2:
+                if self.rect.top < self.ai_settings.walls[i].rect.bottom:
+                    if self.ai_settings.walls[i].rect.bottom - self.rect.top <= 2:
                         collidetop = 1
-                if self.rect.right > self.walls[i].rect.left:
-                    if self.rect.right - self.walls[i].rect.left <= 2:
+                if self.rect.right > self.ai_settings.walls[i].rect.left:
+                    if self.rect.right - self.ai_settings.walls[i].rect.left <= 2:
                         collideright = 1
-                if self.rect.left < self.walls[i].rect.right:
-                    if self.walls[i].rect.right - self.rect.left <= 2:
+                if self.rect.left < self.ai_settings.walls[i].rect.right:
+                    if self.ai_settings.walls[i].rect.right - self.rect.left <= 2:
                         collideleft = 1
         if self.moving_right and self.rect.right < self.screen_rect.right and collideright != 1:
             self.centerx += self.ai_settings.slime_speed_factor
