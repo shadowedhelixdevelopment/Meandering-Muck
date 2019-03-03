@@ -11,7 +11,7 @@ class Slime():
 
         # Load the ship image and get it's rect.
         self.image = pygame.image.load('./images/slime.gif')
-        self.image = self.image.convert_alpha()
+        self.image.set_colorkey((255, 255, 255))
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
 
@@ -48,21 +48,25 @@ class Slime():
         # Update the slime's center value, not the rect.
         for i in range(0, len(self.walls)):
             if self.rect.colliderect(self.walls[i].rect):
-                if self.rect.centery < self.walls[i].rect.centery:
-                    collidebottom = 1
-                elif self.rect.centery > self.walls[i].rect.centery:
-                    collidetop = 1
-                if self.rect.centerx > self.walls[i].rect.centerx:
-                    collideright = 1
-                elif self.rect.centerx < self.walls[i].rect.centerx:
-                    collideleft = 1
-        if self.moving_right and self.rect.right < self.screen_rect.right: # and collideright != 1:
+                if self.rect.bottom > self.walls[i].rect.top:
+                    if self.rect.bottom - self.walls[i].rect.top <= 2:
+                        collidebottom = 1
+                if self.rect.top < self.walls[i].rect.bottom:
+                    if self.walls[i].rect.bottom - self.rect.top <= 2:
+                        collidetop = 1
+                if self.rect.right > self.walls[i].rect.left:
+                    if self.rect.right - self.walls[i].rect.left <= 2:
+                        collideright = 1
+                if self.rect.left < self.walls[i].rect.right:
+                    if self.walls[i].rect.right - self.rect.left <= 2:
+                        collideleft = 1
+        if self.moving_right and self.rect.right < self.screen_rect.right and collideright != 1:
             self.centerx += self.ai_settings.slime_speed_factor
-        if self.moving_left and self.rect.left > 0: # and collideleft != 1:
+        if self.moving_left and self.rect.left > 0 and collideleft != 1:
             self.centerx -= self.ai_settings.slime_speed_factor
-        if self.moving_top and self.rect.top > self.screen_rect.top: # and collidetop != 1:
+        if self.moving_top and self.rect.top > self.screen_rect.top and collidetop != 1:
             self.centery -= self.ai_settings.slime_speed_factor
-        if self.moving_down and self.rect.bottom < self.screen_rect.bottom: # and collidebottom != 1:
+        if self.moving_down and self.rect.bottom < self.screen_rect.bottom and collidebottom != 1:
             self.centery += self.ai_settings.slime_speed_factor
 
         # Update rect object from self.center.
