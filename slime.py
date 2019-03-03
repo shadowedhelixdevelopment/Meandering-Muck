@@ -1,21 +1,23 @@
 import pygame
+import sys
 
 
 class Slime():
 
-    def __init__(self, ai_settings, screen, x, y, walls):
+    def __init__(self, ai_settings, screen, x, y, walls, end):
         """Initialize the slime and set it's starting position."""
         self.screen = screen
         self.ai_settings = ai_settings
         self.walls = walls
+        self.end = end
 
-        # Load the ship image and get it's rect.
+        # Load the slime image and get it's rect.
         self.image = pygame.image.load('./images/slime.gif')
         self.image.set_colorkey((255, 255, 255))
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
 
-        # Start each new ship at the entrance to the maze.
+        # Start each new slime at the entrance to the maze.
         if x == 0:
             self.rect.left = 0
         elif x == ai_settings.maze_width - 1:
@@ -29,7 +31,7 @@ class Slime():
         else:
             self.rect.centery = y * ai_settings.maze_block_height + (ai_settings.maze_block_height / 2)
 
-        # Store a decimal value for the ship's center.
+        # Store a decimal value for the slime's center.
         self.centerx = float(self.rect.centerx)
         self.centery = float(self.rect.centery)
 
@@ -39,12 +41,16 @@ class Slime():
         self.moving_top = False
         self.moving_down = False
 
+
     def update(self):
         """Update the ship's position based on the movement flags."""
         collidebottom = 0
         collidetop = 0
         collideright = 0
         collideleft = 0
+        # Check for End Game
+        if self.rect.colliderect(self.end):
+            sys.exit()
         # Update the slime's center value, not the rect.
         for i in range(0, len(self.walls)):
             if self.rect.colliderect(self.walls[i].rect):

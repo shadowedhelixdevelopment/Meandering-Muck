@@ -156,7 +156,9 @@ def define_maze(ai_settings, maze):
         if value == 1:
             wall = w.Wall((x * ai_settings.maze_block_width), (y * ai_settings.maze_block_height))
             walls.append(wall)
-    return walls
+        elif value == 3:
+            end = w.Wall((x * ai_settings.maze_block_width), (y * ai_settings.maze_block_height))
+    return walls, end
 
 
 # pyplot.figure(figsize=(10, 5))

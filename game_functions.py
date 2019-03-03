@@ -31,12 +31,14 @@ def check_events(slime):
                 slime.moving_down = False
 
 
-def update_screen(ai_settings, screen, walls, slime):
+def update_screen(ai_settings, screen, bg, walls, slime, end):
     """Update images on the screen and flip to the new screen."""
     # Redraw the screen during each pass through the loop.
     screen.fill(ai_settings.bg_color)
+    screen.blit(bg, (0, 0))
     for i in range(0, len(walls)):
         pygame.draw.rect(screen, (0, 0, 0), walls[i].rect)
+    pygame.draw.rect(screen, (255, 255, 255), end.rect)
     slime.blitme()
 
     # Make the most recently drawn screen visible.
