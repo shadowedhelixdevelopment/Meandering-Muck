@@ -20,8 +20,13 @@ class Settings:
         self.maze_height = 0
         self.orig_bg = pygame.image.load("./images/stonefloor.gif")
         self.orig_stone = pygame.image.load("./images/stonetilefloor.gif")
+        self.orig_slime = pygame.image.load('./images/slime.gif')
+        self.orig_slime.set_colorkey((255, 255, 255))
         self.maze_block_width = None
         self.maze_block_height = None
+        self.slime = None
+        self.slime_width = None
+        self.slime_height = None
         self.maze = None
         self.startx = None
         self.starty = None
@@ -36,8 +41,11 @@ class Settings:
         self.maze_height += 10
         self.maze_block_width = self.screen_width / self.maze_width
         self.maze_block_height = self.screen_height / self.maze_height
+        self.slime_width = self.maze_block_width / 2
+        self.slime_height = self.maze_block_height / 2
         self.bg = pygame.transform.flip(self.orig_bg, bool(rand(0, 2)), bool(rand(0, 2)))
         self.stone = pygame.transform.scale(self.orig_stone, (int(self.maze_block_width), int(self.maze_block_height)))
+        self.slime = pygame.transform.scale(self.orig_slime, (int(self.slime_width), int(self.slime_height)))
         self.generatenewmaze()
 
     def generatenewmaze(self):

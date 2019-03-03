@@ -10,8 +10,7 @@ class Slime():
         self.ai_settings = ai_settings
 
         # Load the slime image and get it's rect.
-        self.image = pygame.image.load('./images/slime.gif')
-        self.image.set_colorkey((255, 255, 255))
+        self.image = ai_settings.slime
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
 
