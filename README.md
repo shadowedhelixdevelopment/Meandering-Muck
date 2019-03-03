@@ -7,4 +7,4 @@ Entry for the Extra Credits Game Jam #3: https://itch.io/jam/extra-credits-game-
 * Python Crash Course: https://nostarch.com/pythoncrashcourse
 
 ## Screenshot
-![screenshot1](https://raw.githubusercontent.com/shadowedhelixdevelopment/Meandering-Muck/master/images/meanderingmuck.PNG)
+![screenshot1](https://github.com/shadowedhelixdevelopment/Meandering-Muck/blob/master/images/meanderingmuck.png)
