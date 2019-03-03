@@ -41,7 +41,10 @@ def update_screen(ai_settings, screen, slime):
             if i % k == 0:
                 screen.blit(v, wallrect)
                 break
-    pygame.draw.rect(screen, (255, 255, 255), ai_settings.end.rect)
+    startrect = pygame.draw.rect(screen, (255, 255, 255), ai_settings.start.rect)
+    screen.blit(ai_settings.start_img, startrect)
+    endrect = pygame.draw.rect(screen, (255, 255, 255), ai_settings.end.rect)
+    screen.blit(ai_settings.end_img, endrect)
     slime.blitme()
 
     # Make the most recently drawn screen visible.

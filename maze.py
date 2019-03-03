@@ -151,12 +151,14 @@ def door(maze, axis, wallpoint, mind, maxd):
 def define_maze(s, maze):
     walls = []
     for (x, y), value in numpy.ndenumerate(maze):
+        wall = w.Wall(s, (x * s.maze_block_width), (y * s.maze_block_height))
         if value == 1:
-            wall = w.Wall(s, (x * s.maze_block_width), (y * s.maze_block_height))
             walls.append(wall)
+        if value == 2:
+            start = wall
         elif value == 3:
-            end = w.Wall(s, (x * s.maze_block_width), (y * s.maze_block_height))
-    return walls, end
+            end = wall
+    return walls, start, end
 
 # pyplot.figure(figsize=(10, 5))
 # pyplot.imshow(make_maze(), cmap=pyplot.cm.binary, interpolation=None)

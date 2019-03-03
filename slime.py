@@ -47,7 +47,7 @@ class Slime():
         collideleft = 0
         # Check for End Game
         if self.rect.colliderect(self.ai_settings.end):
-            sys.exit()
+            self.ai_settings.gamedone = True
         # Update the slime's center value, not the rect.
         for i in range(0, len(self.ai_settings.walls)):
             if self.rect.colliderect(self.ai_settings.walls[i].rect):

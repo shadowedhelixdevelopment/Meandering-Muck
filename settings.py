@@ -16,14 +16,16 @@ class Settings:
         # Slime Settings.
         self.slime_speed_factor = 1.5
         # Maze Settings
-        self.maze_width = 0
-        self.maze_height = 0
+        self.maze_width = 4
+        self.maze_height = 4
         self.orig_bg = pygame.image.load("./images/stonefloor.gif")
         self.orig_stone = {}
         self.orig_stone.update({1: pygame.image.load("./images/wall.gif")})
-        self.orig_stone.update({7: pygame.image.load("./images/wall2.gif")})
-        self.orig_stone.update({11: pygame.image.load("./images/wall3.gif")})
+        self.orig_stone.update({7: pygame.image.load("./images/wall3.gif")})
+        self.orig_stone.update({13: pygame.image.load("./images/wall2.gif")})
         self.orig_slime = pygame.image.load('./images/slime.gif')
+        self.orig_start_img = pygame.image.load("./images/stairsup.gif")
+        self.orig_end_img = pygame.image.load("./images/starsdown.gif")
         self.orig_slime.set_colorkey((255, 255, 255))
         self.maze_block_width = None
         self.maze_block_height = None
@@ -36,12 +38,15 @@ class Settings:
         self.bg = None
         self.stone = []
         self.walls = []
+        self.start = None
         self.end = None
+        self.gamedone = False
+        self.level = 1
         self.loadnewsettings()
 
     def loadnewsettings(self):
-        self.maze_width += 10
-        self.maze_height += 10
+        self.maze_width += 2
+        self.maze_height += 2
         self.maze_block_width = self.screen_width / self.maze_width
         self.maze_block_height = self.screen_height / self.maze_height
         self.slime_width = self.maze_block_width / 2
@@ -51,6 +56,8 @@ class Settings:
         for k,v in self.orig_stone.items():
             self.stone.update({k: pygame.transform.scale(v, (int(self.maze_block_width), int(self.maze_block_height)))})
         self.slime = pygame.transform.scale(self.orig_slime, (int(self.slime_width), int(self.slime_height)))
+        self.start_img = pygame.transform.scale(self.orig_start_img, (int(self.maze_block_width), int(self.maze_block_height)))
+        self.end_img = pygame.transform.scale(self.orig_end_img, (int(self.maze_block_width), int(self.maze_block_height)))
         self.generatenewmaze()
 
     def generatenewmaze(self):
@@ -60,4 +67,4 @@ class Settings:
                 self.startx = x
                 self.starty = y
                 break
-        self.walls, self.end = mz.define_maze(self, self.maze)
+        self.walls, self.start, self.end = mz.define_maze(self, self.maze)
