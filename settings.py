@@ -21,8 +21,8 @@ class Settings:
         self.orig_bg = pygame.image.load("./images/stonefloor.gif")
         self.orig_stone = {}
         self.orig_stone.update({1: pygame.image.load("./images/wall.gif")})
-        self.orig_stone.update({7: pygame.image.load("./images/wall3.gif")})
-        self.orig_stone.update({13: pygame.image.load("./images/wall2.gif")})
+        self.orig_stone.update({11: pygame.image.load("./images/wall3.gif")})
+        self.orig_stone.update({27: pygame.image.load("./images/wall2.gif")})
         self.orig_slime = pygame.image.load('./images/slime.gif')
         self.orig_start_img = pygame.image.load("./images/stairsup.gif")
         self.orig_end_img = pygame.image.load("./images/starsdown.gif")
